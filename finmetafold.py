@@ -12,12 +12,11 @@ def print_title():
 
     star = EMOJI['star']
     console.print(f"""[blue b]
-{star*18}
-     _       _      _           
-    |_) _| _|_ |\/| _) _|_ |_|_ :blue_heart:
-    |  (_|  |  |  | _)  |_   |  
-
-{star*18}
+{star*13}
+ +-+-+-+-+-+-+-+-+-+-+-+
+ |F|i|n|M|e|t|a|F|o|l|d| :blue_heart:
+ +-+-+-+-+-+-+-+-+-+-+-+ 
+{star*13}
     """)
     print()
 
@@ -48,7 +47,7 @@ def __readable_dates(doc_info):
 def printMeta(directory):
     for dirpath, dirnames, files in os.walk(directory): #para el diretorio, nombre y archivos en la carpeta docs
         for name in files: #recorremos los posibles fichreos
-            ext = name.lower().rsplit('.', 1)[-1]
+            ext = name.lower().rsplit('.', 1)[-1] # obtenemos la extensión del archivo a escanear
             if ext.lower() == "pdf":
                 full_path_file = dirpath+os.path.sep+name
                 
@@ -71,9 +70,11 @@ def printMeta(directory):
                             [table.add_row(str(metaItem[1:]), str(docInfo[metaItem])) for  metaItem in docInfo]
                             console.print(f":open_file_folder:[green b] Path: [cyan]{full_path_file}[/cyan]")
                             console.print(table)
-                        print("\n")
+                        print()
                     except utils.PdfReadError:
-                            continue
+                        continue
+                    except OSError:
+                        continue
 
 def check_arguments():
     parser = argparse.ArgumentParser(description='Directorio donde están los pdf.')
@@ -96,4 +97,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n\n--- Programa terminado por el usuario ---\n")        
+        print("\n\n\n--- Programa terminado por el usuario ---\n")
